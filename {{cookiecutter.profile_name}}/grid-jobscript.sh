@@ -2,6 +2,8 @@
 # properties = {properties}
 
 set -e
+set -x
+set +u
 
 echo "hostname:"
 hostname -f
