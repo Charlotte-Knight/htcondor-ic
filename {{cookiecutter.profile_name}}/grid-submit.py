@@ -22,7 +22,7 @@ fix_apptainer_args(jobscript)
 job_properties = read_job_properties(jobscript)
 
 UUID = uuid4()  # random UUID
-jobDir = "{{cookiecutter.htcondor_log_dir}}/{}_{}".format(job_properties["jobid"], UUID)
+jobDir = "/home/hep/mdk16/PhD/EFT2Obs-Workflow/.condor_jobs/{}_{}".format(job_properties["jobid"], UUID)
 makedirs(jobDir, exist_ok=True)
 
 sub = htcondor.Submit(
@@ -49,16 +49,6 @@ if request_disk is not None:
 runtime = job_properties["resources"].get("runtime", None)
 if runtime is not None:
    sub["+MaxRuntime"] = str(runtime*60) # convert minutes to seconds
-
-{%- if cookiecutter.location_cern %}
-
-# Add kerberos credentials
-# c.f. https://batchdocs.web.cern.ch/local/pythonapi.html
-col = htcondor.Collector()
-credd = htcondor.Credd()
-credd.add_user_cred(htcondor.CredTypes.Kerberos, None)
-sub["MY.SendCredential"] = "True"
-{%- endif %}
 
 schedd = htcondor.Schedd()
 clusterID = schedd.submit(sub)

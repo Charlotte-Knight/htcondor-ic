@@ -13,7 +13,7 @@ def print_and_exit(s):
 
 jobID, UUID, clusterID = sys.argv[1].split("_")
 
-jobDir = "{{cookiecutter.htcondor_log_dir}}/{}_{}".format(jobID, UUID)
+jobDir = "/home/hep/mdk16/PhD/EFT2Obs-Workflow/.condor_jobs/{}_{}".format(jobID, UUID)
 jobLog = join(jobDir, "condor.log")
 
 failed_states = [
